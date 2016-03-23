@@ -1,0 +1,10 @@
+.layout {
+  z-index: 0;
+  position: relative;
+}
+
+.frame {
+  border: 5px solid black;
+  position: absolute;
+  z-index: 1;
+}
