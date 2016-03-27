@@ -21,14 +21,7 @@ module.exports = function(grunt) {
     connect: {
       server: {
         options: {
-          port: 1337
-        }
-      }
-    },
-    uglify: {
-      dist: {
-        files: {
-          './dist/index.min.js' : ['./dist/index.js']
+          port: 8888
         }
       }
     }
@@ -37,7 +30,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.registerTask('default', ['connect:server', 'watch']);
   grunt.registerTask('build', ['browserify', 'uglify']);

@@ -17,3 +17,6 @@
 /tmp
 /node_modules
 /public/system
+
+# Ignore files generated with Grunt
+app/assets/javascripts/index.js
