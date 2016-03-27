@@ -8,13 +8,13 @@ module.exports = function(grunt) {
           ]
         },
         files: {
-          './app/assets/javascripts/first.js': ['./app/js_src/first.jsx']
+          './app/assets/javascripts/index.js': ['./app/js_src/index.jsx']
         }
       }
     },
     watch: {
       scripts: {
-        files: ['./app/js_src/*.js', './app/js_src/*.jsx'],
+        files: ['./app/js_src/**/*/*.js', './app/js_src/**/*/*.jsx'],
         tasks: ['browserify']
       }
     },

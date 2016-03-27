@@ -27,10 +27,16 @@ class Counter extends Component {
         <h3>{ value }</h3>
         <button onClick={ onIncrement }>Inc</button>
         <button onClick={ onDecrement }>Dec</button>
+        <button onClick={ () => this.handleIncrement() }>+2</button>
       </div>
     )
   }
 
+  handleIncrement() {
+    this.props.onIncrement();
+    this.props.onIncrement();
+
+  }
 }
 
 const store = createStore(formReducer)

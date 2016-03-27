@@ -47,6 +47,8 @@ var Counter = function (_Component) {
   _createClass(Counter, [{
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var _props = this.props;
       var value = _props.value;
       var onIncrement = _props.onIncrement;
@@ -74,8 +76,21 @@ var Counter = function (_Component) {
           'button',
           { onClick: onDecrement },
           'Dec'
+        ),
+        _react2.default.createElement(
+          'button',
+          { onClick: function onClick() {
+              return _this2.handleIncrement();
+            } },
+          '+2'
         )
       );
+    }
+  }, {
+    key: 'handleIncrement',
+    value: function handleIncrement() {
+      this.props.onIncrement();
+      this.props.onIncrement();
     }
   }]);
 
