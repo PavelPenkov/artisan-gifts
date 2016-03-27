@@ -8,7 +8,7 @@ module.exports = function(grunt) {
           ]
         },
         files: {
-          './app/assets/javascripts/index.js': ['./app/js_src/index.jsx']
+          './app/assets/javascripts/first.js': ['./app/js_src/first.jsx']
         }
       }
     },
