@@ -13,6 +13,17 @@ module.exports = function(grunt) {
         files: {
           './app/assets/javascripts/index.js': ['./app/js_src/index.jsx']
         }
+      },
+      build: {
+        options: {
+          transform: [
+            ['babelify', { presets: ['es2015', 'react'] }]
+          ],
+          extension: ['.jsx'],
+        },
+        files: {
+          './app/assets/javascripts/index.js': ['./app/js_src/index.jsx']
+        }
       }
     },
     uglify: {

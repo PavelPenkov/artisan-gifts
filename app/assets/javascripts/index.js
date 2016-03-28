@@ -451,7 +451,6 @@ var artisanReducer = function artisanReducer() {
     case _actions2.default.CHANGE_PARAM_TYPE:
       break;
     case _actions2.default.ADD_PARAM:
-      console.log('in ADD_PARAM');
       var p = { id: _nodeUuid2.default.v1(), name: 'text', type: 'text' };
       return Object.assign({}, state, { context: { params: state.context.params.concat(p) } });
     default:

@@ -7,5 +7,5 @@ require 'rake/hooks'
 Rails.application.load_tasks
 
 before 'assets:precompile' do
-  `grunt browserify`
+  `grunt browserify:build`
 end

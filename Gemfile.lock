@@ -84,6 +84,8 @@ GEM
       cocaine (~> 0.5.5)
       mime-types
       mimemagic (= 0.3.0)
+    quiet_assets (1.1.0)
+      railties (>= 3.1, < 5.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -160,6 +162,7 @@ DEPENDENCIES
   mini_magick
   oj
   paperclip
+  quiet_assets
   rails (= 4.2.6)
   rake-hooks
   sass-rails (~> 5.0)
