@@ -2,12 +2,14 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.2.6'
 gem 'sqlite3'
-gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'rake-hooks', require: false
 gem 'sass-rails', '~> 5.0'
 gem 'coffee-rails'
 gem 'paperclip'
+gem 'jbuilder', '~> 2.4'
+gem 'oj'
+gem 'thin'
 
 group :development, :test do
   gem 'byebug'
