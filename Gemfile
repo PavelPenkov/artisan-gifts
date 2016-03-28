@@ -10,6 +10,7 @@ gem 'paperclip'
 gem 'jbuilder', '~> 2.4'
 gem 'oj'
 gem 'thin'
+gem 'mini_magick'
 
 group :development, :test do
   gem 'byebug'

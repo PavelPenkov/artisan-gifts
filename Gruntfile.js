@@ -5,7 +5,10 @@ module.exports = function(grunt) {
         options: {
           transform: [
             ['babelify', { presets: ['es2015', 'react'] }]
-          ]
+          ],
+          extension: ['.jsx'],
+          watch: true,
+          keepAlive: true
         },
         files: {
           './app/assets/javascripts/index.js': ['./app/js_src/index.jsx']

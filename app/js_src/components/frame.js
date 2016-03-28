@@ -1,3 +1,4 @@
+// vim: set ft=javascript.jsx:
 import React from 'react'
 
 class Frame extends React.Component {

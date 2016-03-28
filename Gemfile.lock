@@ -71,6 +71,7 @@ GEM
       mime-types (>= 1.16, < 3)
     mime-types (2.99.1)
     mimemagic (0.3.0)
+    mini_magick (4.5.0)
     mini_portile2 (2.0.0)
     minitest (5.8.4)
     multi_json (1.11.2)
@@ -156,6 +157,7 @@ DEPENDENCIES
   byebug
   coffee-rails
   jbuilder (~> 2.4)
+  mini_magick
   oj
   paperclip
   rails (= 4.2.6)
