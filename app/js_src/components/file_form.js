@@ -1,5 +1,7 @@
 // vim: set ft=javascript.jsx:
 import React from 'react'
+import { changeBackground } from '../actions'
+import { connect } from 'react-redux'
 
 class FileForm extends React.Component {
   constructor(props) {
@@ -8,10 +10,11 @@ class FileForm extends React.Component {
   }
 
   render() {
-    return (<form onSubmit={ (e) => this.handleSubmit(e) } encType="multipart/form-data">
-      <input type="file" onChange={(e) => this.handleFile(e) } accept="image/png,image/jpeg" />
-      <progress value={this.state.progress} />
-    </form>
+    return (
+      <form onSubmit={ (e) => this.handleSubmit(e) } encType="multipart/form-data">
+        <input type="file" onChange={(e) => this.handleFile(e) } accept="image/png,image/jpeg" />
+        <progress value={this.state.progress} />
+      </form>
     );
   }
 
@@ -33,8 +36,8 @@ class FileForm extends React.Component {
       xhr.upload.onprogress = (e) => self.setState({progress: e.loaded / e.total});
       xhr.onreadystatechange = () => {
         if(xhr.readyState === 4 && xhr.status === 200) {
-          let url = JSON.parse(xhr.responseText).url;
-          this.props.changeBackground(url);
+          let resp = JSON.parse(xhr.responseText)
+          this.props.onImageUploaded(resp.id, resp.url);
         }
       }
 
@@ -45,4 +48,13 @@ class FileForm extends React.Component {
   }
 }
 
-export default FileForm
+const mapStateToProps = (state) => { return {} };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onImageUploaded: (id, url) => dispatch(changeBackground(id, url))
+  }
+}
+
+const ConnectedFileForm = connect(mapStateToProps, mapDispatchToProps);
+
+export default ConnectedFileForm

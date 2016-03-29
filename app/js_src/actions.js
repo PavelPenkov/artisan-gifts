@@ -1,6 +1,9 @@
-const Actions = {
-  CHANGE_BACKGROUND: 'CHANGE_BACKGROUND',
-  ADD_PARAM: 'ADD_PARAM'
+const changeBackground = (id, url) => {
+  return {
+    type: 'CHANGE_BACKGROUND',
+    id: id,
+    url: url
+  }
 }
 
-export default Actions
+export { changeBackground }

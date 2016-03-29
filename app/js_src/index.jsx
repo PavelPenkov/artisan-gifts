@@ -1,16 +1,19 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { render } from 'react-dom'
 import _ from 'lodash'
 import { createStore } from 'redux'
-import Layout from './components/layout'
-import FileForm from './components/fileForm'
+import ConnectedLayout from './components/layout'
+import ConnectedFileForm from './components/file_form'
 import LayoutEditor from './components/layout_editor'
-import Actions from './actions'
 import uuid from 'node-uuid'
+import { Provider } from 'react-redux'
+import App from './components/app'
 
 const initialState = {
   layout: {
-    background: '/bg.jpg',
+    background: {
+      url: '/bg.jpg'
+    },
     frames: []
   },
   context: {
@@ -21,17 +24,22 @@ const initialState = {
   }
 }
 
+const CHANGE_BACKGROUND = 'CHANGE_BACKGROUND'
+const ADD_PARAM = 'ADD_PARAM'
+const CHANGE_PARAM_NAME = 'CHANGE_PARAM_NAME'
+const CHANGE_PARAM_TYPE = 'CHANGE_PARAM_TYPE'
+
 const artisanReducer = function(state = initialState, action) {
   switch(action.type) {
-    case Actions.CHANGE_BACKGROUND:
+    case CHANGE_BACKGROUND:
       return Object.assign({}, state, { layout: { background: action.url }});
-    case Actions.CHANGE_PARAM_NAME:
+    case CHANGE_PARAM_NAME:
       break;
-    case Actions.CHANGE_PARAM_TYPE:
+    case CHANGE_PARAM_TYPE:
       break;
-    case Actions.ADD_PARAM:
+    case ADD_PARAM:
       let p = { id: uuid.v1(), name: 'text', type: 'text'}
-      return Object.assign({}, state, { context: { params: state.context.params.concat(p) }});
+      return Object.assign({}, state, { context: { params: state.context.params.concat(p)}});
     default:
       return state;
   }
@@ -39,16 +47,9 @@ const artisanReducer = function(state = initialState, action) {
 
 const store = createStore(artisanReducer);
 
-function render() {
-  ReactDOM.render(
-    <div>
-      <FileForm changeBackground={ (url) => store.dispatch({type: Actions.CHANGE_BACKGROUND, url: url}) } />
-      <Layout frames={ store.getState().layout.frames } background = { store.getState().layout.background } />
-      <LayoutEditor params= { store.getState().context.params } onAddParam = { () => store.dispatch({type: Actions.ADD_PARAM }) } />
-    </div>,
-    document.getElementById("main")
-  );
-}
-
-render();
-store.subscribe(render);
+render(
+  <Provider store={ store } >
+    <App />
+  </Provider>,
+  document.getElementById('main')
+);

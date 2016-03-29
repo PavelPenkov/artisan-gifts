@@ -2,6 +2,7 @@
 import React from 'react'
 import _ from 'lodash'
 import Frame from './frame'
+import { connect } from 'react-redux'
 
 class Layout extends React.Component {
   render() {
@@ -15,4 +16,20 @@ class Layout extends React.Component {
   }
 }
 
-export default Layout
+const mapStateToProps = (state) => {
+  return {
+    background: state.layout.background.url,
+    frames: state.layout.frames
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {};
+}
+
+const ConnectedLayout = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Layout)
+
+export default ConnectedLayout

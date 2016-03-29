@@ -1,29 +1,30 @@
 module.exports = function(grunt) {
   require('google-closure-compiler').grunt(grunt);
 
+  var files = {
+    './app/assets/javascripts/index.js': ['./app/js_src/index.jsx']
+  };
+
+  var transform =  [
+    ['babelify', { presets: ['es2015', 'react'] }]
+  ];
+
   grunt.initConfig({
     browserify: {
       dist: {
         options: {
-          transform: [
-            ['babelify', { presets: ['es2015', 'react'] }]
-          ],
+          transform: transform,
+          debug: true,
           watch: true,
           keepAlive: true
         },
-        files: {
-          './app/assets/javascripts/index.js': ['./app/js_src/index.jsx']
-        }
+        files: files
       },
       release: {
         options: {
-          transform: [
-            ['babelify', { presets: ['es2015', 'react'] }]
-          ]
+          transform: transform
         },
-        files: {
-          './app/assets/javascripts/index.js': ['./app/js_src/index.jsx']
-        }
+        files: files
       },
     },
     'closure-compiler': {
@@ -40,7 +41,7 @@ module.exports = function(grunt) {
     uglify: {
       dist: {
         files: {
-          './app/assets/javascripts/index.min.js': './app/assets/javascripts/index.js'
+          './app/assets/javascripts/index.ugly.js': './app/assets/javascripts/index.js'
         }
       }
     },
@@ -59,4 +60,5 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['connect:server', 'browserify']);
   grunt.registerTask('release', ['browserify:release', 'closure-compiler']);
+  grunt.registerTask('release-uglify', ['browserify:release', 'uglify']);
 };
