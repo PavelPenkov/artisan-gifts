@@ -21,3 +21,7 @@ group :development do
   gem 'spring'
   gem 'quiet_assets'
 end
+
+group :assets do
+  gem 'uglifier'
+end

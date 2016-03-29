@@ -1,4 +1,6 @@
 module.exports = function(grunt) {
+  require('google-closure-compiler').grunt(grunt);
+
   grunt.initConfig({
     browserify: {
       dist: {
@@ -6,7 +8,6 @@ module.exports = function(grunt) {
           transform: [
             ['babelify', { presets: ['es2015', 'react'] }]
           ],
-          extension: ['.jsx'],
           watch: true,
           keepAlive: true
         },
@@ -14,15 +15,25 @@ module.exports = function(grunt) {
           './app/assets/javascripts/index.js': ['./app/js_src/index.jsx']
         }
       },
-      build: {
+      release: {
         options: {
           transform: [
             ['babelify', { presets: ['es2015', 'react'] }]
-          ],
-          extension: ['.jsx'],
+          ]
         },
         files: {
           './app/assets/javascripts/index.js': ['./app/js_src/index.jsx']
+        }
+      },
+    },
+    'closure-compiler': {
+      frontend: {
+        js: './app/assets/javascripts/index.js',
+        jsOutputFile:  './app/assets/javascripts/index.min.js',
+        maxBuffer: 500,
+        options: {
+          compilation_level: 'ADVANCED_OPTIMIZATIONS',
+          language_in: 'ECMASCRIPT5_STRICT'
         }
       }
     },
@@ -31,12 +42,6 @@ module.exports = function(grunt) {
         files: {
           './app/assets/javascripts/index.min.js': './app/assets/javascripts/index.js'
         }
-      }
-    },
-    watch: {
-      scripts: {
-        files: ['./app/js_src/**/*/*.js', './app/js_src/**/*/*.jsx'],
-        tasks: ['browserify']
       }
     },
     connect: {
@@ -49,10 +54,9 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-browserify');
-  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  grunt.registerTask('default', ['connect:server', 'watch']);
-  grunt.registerTask('build', ['browserify', 'uglify']);
+  grunt.registerTask('default', ['connect:server', 'browserify']);
+  grunt.registerTask('release', ['browserify:release', 'closure-compiler']);
 };
