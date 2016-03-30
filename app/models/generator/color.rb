@@ -1,4 +1,4 @@
-class Color
+class Generator::Color
   attr_accessor :red, :green, :blue, :alpha
 
   def initialize(r, g, b, a = 0)

@@ -1,3 +1,7 @@
+body {
+  font-family: sans-serif;
+}
+
 .layout {
   z-index: 0;
   position: relative;
@@ -7,4 +11,14 @@
   border: 5px solid black;
   position: absolute;
   z-index: 1;
+}
+
+.palette {
+  border: 2px solid black;
+  margin: 5px;
+  padding: 5px;
+}
+
+.palette_table {
+  vertical-align: top;
 }

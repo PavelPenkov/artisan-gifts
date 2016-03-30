@@ -55,6 +55,6 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const ConnectedFileForm = connect(mapStateToProps, mapDispatchToProps);
+const ConnectedFileForm = connect(mapStateToProps, mapDispatchToProps)(FileForm);
 
 export default ConnectedFileForm

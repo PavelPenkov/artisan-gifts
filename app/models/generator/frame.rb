@@ -1,8 +1,23 @@
 require 'securerandom'
-require 'mini_magick'
 
-class Frame
-  attr_accessor :top_left, :bottom_right, :name
+class Generator::Frame
+  attr_accessor :top, :left, :width, :height, :name, :param
+
+  def self.from_json(doc)
+    frame = case doc[:type]
+            when 'overlay' then ::Generator::OverlayFrame.new
+            when 'text' then ::Generator::TextFrame.new
+            end
+
+    frame.tap do |f|
+      f.name = doc[:name]
+      f.param = doc[:param]
+      f.top = doc[:top]
+      f.left = doc[:left]
+      f.width = doc[:width]
+      f.height = doc[:height]
+    end
+  end
 
   def z_order
     @z_order || 0
@@ -13,39 +28,18 @@ class Frame
   end
 
   def tmp_dir
-    # ENV['TMPDIR'] || '/tmp'
-    '/home/synapse'
+    File.join(Rails.root, 'tmp')
   end
 
   def dst_file_name
     File.join(tmp_dir, "#{SecureRandom.hex}.png")
   end
-end
 
-class TextFrame < Frame
-  attr_accessor :font, :font_size, :color
-
-  def apply(src, value)
-  end
-end
-
-class ImageFrame < Frame
-  def apply(src, value)
-    bg = src
-    layer = MiniMagick::Image.new(value[:src])
-    result = bg.composite(layer) do |c|
-      c.compose 'Over'
-      c.geometry "#{width}x#{height}+#{top_left.x}+#{top_left.y}"
-    end
-    result.format('png')
-    result
+  def top_left
+    ::Generator::Point.new(left, top)
   end
 
-  def width
-    bottom_right.x - top_left.x
-  end
-
-  def height
-    bottom_right.y - top_left.y
+  def bottom_right
+    ::Generator::Point.new(left + width, top + height)
   end
 end

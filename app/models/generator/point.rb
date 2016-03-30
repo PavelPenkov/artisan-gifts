@@ -1,4 +1,4 @@
-class Point
+class Generator::Point
   attr_accessor :x, :y
 
   def initialize(x, y)

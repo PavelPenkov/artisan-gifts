@@ -20,6 +20,8 @@ group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'quiet_assets'
+  gem 'awesome_print'
+  gem 'pry'
 end
 
 group :assets do
