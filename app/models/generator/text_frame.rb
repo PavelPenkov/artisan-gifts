@@ -16,12 +16,13 @@ module Generator
     def apply(src, value)
       label_name = tmp_name
       MiniMagick::Tool::Convert.new do |convert|
-        convert.background('None')
-        convert.fill(color)
-        convert.size("#{width}x#{height}")
-        convert.gravity('center')
-        convert.font(font)
-        convert.label(value)
+        convert.background :none
+        convert.fill color
+        convert.size "#{width}x#{height}"
+        convert.gravity :center
+        convert.font font
+        convert.label value
+        convert.stroke :black
         convert << label_name
       end
       bg = src
@@ -30,7 +31,7 @@ module Generator
         c.compose 'Over'
         c.geometry "#{width}x#{height}+#{top_left.x}+#{top_left.y}"
       end
-      result.format('png')
+      result.format :png
       result
     end
 
