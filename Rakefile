@@ -5,7 +5,3 @@ require File.expand_path('../config/application', __FILE__)
 require 'rake/hooks'
 
 Rails.application.load_tasks
-
-before 'assets:precompile' do
-  `grunt browserify:build`
-end
