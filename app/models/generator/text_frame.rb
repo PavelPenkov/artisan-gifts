@@ -22,8 +22,6 @@ module Generator
         convert.gravity :center
         convert.font font
         convert.label value
-        convert.stroke :black
-        convert.strokewidth 5
         convert << label_name
       end
       bg = src
