@@ -14,7 +14,7 @@ module Generator
       tmp.format('png')
       name = tmp_name
       tmp.write(name)
-      @src = MiniMagick::Image.open(name)
+      @src = MiniMagick::Image.new(name)
 
       @layout = layout
       @context = context
