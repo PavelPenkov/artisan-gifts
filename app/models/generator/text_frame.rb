@@ -17,9 +17,10 @@ module Generator
       label_name = tmp_name
       MiniMagick::Tool::Convert.new do |convert|
         convert.background('None')
-        convert.fill('white')
+        convert.fill(color)
         convert.size("#{width}x#{height}")
         convert.gravity('center')
+        convert.font(font)
         convert.label(value)
         convert << label_name
       end

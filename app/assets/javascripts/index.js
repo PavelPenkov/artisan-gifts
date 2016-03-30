@@ -642,6 +642,42 @@ var _Palette = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
+      var fontOptions = _.map(window.__fonts, function (font, i) {
+        return _react2.default.createElement(
+          'option',
+          { key: i, value: font },
+          font
+        );
+      });
+      var extraControls;
+      if (this.props.frame.type === 'text') {
+        extraControls = _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'div',
+            null,
+            'Font:',
+            _react2.default.createElement(
+              'select',
+              { value: this.props.frame.font, onChange: function onChange(e) {
+                  return _this2.handleFontChange(e);
+                } },
+              fontOptions
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            'Color: ',
+            _react2.default.createElement('input', { type: 'color', value: this.props.frame.color, onChange: function onChange(e) {
+                return _this2.handleColorChange(e);
+              } })
+          )
+        );
+      } else {
+        extraControls = _react2.default.createElement('div', null);
+      }
       return _react2.default.createElement(
         'div',
         { className: 'palette' },
@@ -652,121 +688,70 @@ var _Palette = function (_React$Component) {
           this.props.frame.name
         ),
         _react2.default.createElement(
-          'table',
+          'div',
           null,
+          'Type:',
           _react2.default.createElement(
-            'tbody',
-            null,
+            'select',
+            { value: this.props.frame.type, onChange: function onChange(e) {
+                return _this2.handleTypeChange(e);
+              } },
             _react2.default.createElement(
-              'tr',
-              null,
-              _react2.default.createElement(
-                'td',
-                null,
-                'Type'
-              ),
-              _react2.default.createElement(
-                'td',
-                null,
-                _react2.default.createElement(
-                  'select',
-                  { value: this.props.frame.type, onChange: function onChange(e) {
-                      return _this2.handleTypeChange(e);
-                    } },
-                  _react2.default.createElement(
-                    'option',
-                    { value: 'text' },
-                    'Text'
-                  ),
-                  _react2.default.createElement(
-                    'option',
-                    { value: 'overlay' },
-                    'Overlay'
-                  )
-                )
-              )
+              'option',
+              { value: 'text' },
+              'Text'
             ),
             _react2.default.createElement(
-              'tr',
-              null,
-              _react2.default.createElement(
-                'td',
-                null,
-                'Param'
-              ),
-              _react2.default.createElement(
-                'td',
-                null,
-                _react2.default.createElement('input', { type: 'text', value: this.props.frame.param, onChange: function onChange(e) {
-                    return _this2.handleParamChange(e);
-                  } })
-              )
-            ),
-            _react2.default.createElement(
-              'tr',
-              null,
-              _react2.default.createElement(
-                'td',
-                null,
-                'Top'
-              ),
-              _react2.default.createElement(
-                'td',
-                null,
-                _react2.default.createElement('input', { type: 'range', onChange: function onChange(e) {
-                    return _this2.handlePosChange(e, 'top');
-                  }, value: this.props.frame.top, min: '0', max: this.props.height })
-              )
-            ),
-            _react2.default.createElement(
-              'tr',
-              null,
-              _react2.default.createElement(
-                'td',
-                null,
-                'Left'
-              ),
-              _react2.default.createElement(
-                'td',
-                null,
-                _react2.default.createElement('input', { type: 'range', onChange: function onChange(e) {
-                    return _this2.handlePosChange(e, 'left');
-                  }, value: this.props.frame.left, min: '0', max: this.props.width })
-              )
-            ),
-            _react2.default.createElement(
-              'tr',
-              null,
-              _react2.default.createElement(
-                'td',
-                null,
-                'Width'
-              ),
-              _react2.default.createElement(
-                'td',
-                null,
-                _react2.default.createElement('input', { type: 'range', onChange: function onChange(e) {
-                    return _this2.handlePosChange(e, 'width');
-                  }, value: this.props.frame.width, min: '0', max: this.props.width })
-              )
-            ),
-            _react2.default.createElement(
-              'tr',
-              null,
-              _react2.default.createElement(
-                'td',
-                null,
-                'Height'
-              ),
-              _react2.default.createElement(
-                'td',
-                null,
-                _react2.default.createElement('input', { type: 'range', onChange: function onChange(e) {
-                    return _this2.handlePosChange(e, 'height');
-                  }, value: this.props.frame.height, min: '0', max: this.props.height })
-              )
+              'option',
+              { value: 'overlay' },
+              'Overlay'
             )
           )
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          'Param',
+          _react2.default.createElement('input', { type: 'text', value: this.props.frame.param, onChange: function onChange(e) {
+              return _this2.handleParamChange(e);
+            } })
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          'Top',
+          _react2.default.createElement('input', { type: 'range', onChange: function onChange(e) {
+              return _this2.handlePosChange(e, 'top');
+            }, value: this.props.frame.top, min: '0', max: this.props.height })
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          'Left',
+          _react2.default.createElement('input', { type: 'range', onChange: function onChange(e) {
+              return _this2.handlePosChange(e, 'left');
+            }, value: this.props.frame.left, min: '0', max: this.props.width })
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          'Width',
+          _react2.default.createElement('input', { type: 'range', onChange: function onChange(e) {
+              return _this2.handlePosChange(e, 'width');
+            }, value: this.props.frame.width, min: '0', max: this.props.width })
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          'Height',
+          _react2.default.createElement('input', { type: 'range', onChange: function onChange(e) {
+              return _this2.handlePosChange(e, 'height');
+            }, value: this.props.frame.height, min: '0', max: this.props.height })
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          extraControls
         )
       );
     }
@@ -784,6 +769,16 @@ var _Palette = function (_React$Component) {
     key: 'handleParamChange',
     value: function handleParamChange(e) {
       return this.props.frameParamChange(this.props.frame.id, e.target.value);
+    }
+  }, {
+    key: 'handleColorChange',
+    value: function handleColorChange(e) {
+      return this.props.frameColorChange(this.props.frame.id, e.target.value);
+    }
+  }, {
+    key: 'handleFontChange',
+    value: function handleFontChange(e) {
+      return this.props.frameFontChange(this.props.frame.id, e.target.value);
     }
   }]);
 
@@ -809,6 +804,14 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 
     frameParamChange: function frameParamChange(id, name) {
       return dispatch({ type: 'FRAME_PARAM_CHANGE', id: id, name: name });
+    },
+
+    frameColorChange: function frameColorChange(id, color) {
+      return dispatch({ type: 'FRAME_COLOR_CHANGE', color: color, id: id });
+    },
+
+    frameFontChange: function frameFontChange(id, font) {
+      return dispatch({ type: 'FRAME_FONT_CHANGE', font: font, id: id });
     }
   };
 };
@@ -1192,6 +1195,13 @@ var _TextParam = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
+      var fontOptions = _.map(window.__fonts, function (font, i) {
+        return _react2.default.createElement(
+          'option',
+          { key: i, value: font },
+          font
+        );
+      });
       return _react2.default.createElement(
         'div',
         null,
@@ -1210,6 +1220,16 @@ var _TextParam = function (_React$Component) {
     value: function handleValueChange(e) {
       return this.props.onValueChange(this.props.paramId, e.target.value);
     }
+  }, {
+    key: 'handleColorChange',
+    value: function handleColorChange(e) {
+      return this.props.onColorChange(this.props.paramId, e.target.value);
+    }
+  }, {
+    key: 'handleFontChange',
+    value: function handleFontChange(e) {
+      return this.props.onFontChange(this.props.paramId, e.target.value);
+    }
   }]);
 
   return _TextParam;
@@ -1223,6 +1243,14 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     onValueChange: function onValueChange(id, value) {
       return dispatch({ type: 'PARAM_VALUE_CHANGE', value: value, id: id });
+    },
+
+    onColorChange: function onColorChange(id, color) {
+      return dispatch({ type: 'PARAM_COLOR_CHANGE', color: color, id: id });
+    },
+
+    onFontChange: function onFontChange(id, font) {
+      return dispatch({ type: 'PARAM_FONT_CHANGE', font: font, id: id });
     }
   };
 };
@@ -1308,6 +1336,8 @@ var ADD_PARAM = 'ADD_PARAM';
 var PARAM_NAME_CHANGE = 'PARAM_NAME_CHANGE';
 var PARAM_TYPE_CHANGE = 'PARAM_TYPE_CHANGE';
 var PARAM_VALUE_CHANGE = 'PARAM_VALUE_CHANGE';
+var FRAME_FONT_CHANGE = 'FRAME_FONT_CHANGE';
+var FRAME_COLOR_CHANGE = 'FRAME_COLOR_CHANGE';
 var PARAM_DELETE = 'PARAM_DELETE';
 var FRAME_TRANSFORM = 'FRAME_TRANSFORM';
 var FRAME_TYPE_CHANGE = 'FRAME_TYPE_CHANGE';
@@ -1331,12 +1361,14 @@ var addFrame = function addFrame(state) {
   var frame = {
     id: _nodeUuid2.default.v1(),
     name: 'Frame_' + nextFrameSuffix++,
-    type: 'overlay',
+    type: 'text',
     top: 0,
     left: 0,
     width: 300,
     height: 200,
-    param: ''
+    param: '',
+    font: 'fixed',
+    color: '#FFFFFF'
   };
 
   var newFrames = state.layout.frames.concat(frame);
@@ -1353,7 +1385,7 @@ var artisanReducer = function artisanReducer() {
       var newLayout = Object.assign({}, state.layout, { background: { url: action.url, id: action.id } });
       return Object.assign({}, state, { layout: newLayout });
     case ADD_PARAM:
-      var p = { id: _nodeUuid2.default.v1(), name: 'text_' + nextParamSuffix++, type: 'text', value: '' };
+      var p = { id: _nodeUuid2.default.v1(), name: 'text_' + nextParamSuffix++, type: 'text', value: '', font: 'fixed', color: '#FFFFFF' };
       return Object.assign({}, state, { context: { params: state.context.params.concat(p) } });
     case PARAM_DELETE:
       var newParams = _lodash2.default.filter(state.context.params, function (p) {
@@ -1374,17 +1406,19 @@ var artisanReducer = function artisanReducer() {
       var newParams = _lodash2.default.map(state.context.params, function (p) {
         return p.id === action.id ? Object.assign({}, p, { value: action.value }) : p;
       });
-      var newState = Object.assign({}, state, { context: { params: newParams } });
-      return newState;
+      return Object.assign({}, state, { context: { params: newParams } });
     case FRAME_TRANSFORM:
       var newProp = {};
       newProp[action.property] = action.value;
       return updatedFrame(state, action.id, newProp);
     case FRAME_TYPE_CHANGE:
-      console.log('In frame_type_change');
       return updatedFrame(state, action.id, { type: action.newType });
     case FRAME_PARAM_CHANGE:
       return updatedFrame(state, action.id, { param: action.name });
+    case FRAME_COLOR_CHANGE:
+      return updatedFrame(state, action.id, { color: action.color });
+    case FRAME_FONT_CHANGE:
+      return updatedFrame(state, action.id, { font: action.font });
     case SET_DIMENSIONS:
       return Object.assign({}, state, { width: action.width, height: action.height });
     case ADD_FRAME:

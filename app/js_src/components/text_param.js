@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 class _TextParam extends React.Component {
   render() {
+    let fontOptions = _.map(window.__fonts, (font, i) => <option key={i} value={font}>{font}</option>)
     return (
       <div>
         <div>
@@ -17,6 +18,14 @@ class _TextParam extends React.Component {
   handleValueChange(e) {
     return this.props.onValueChange(this.props.paramId, e.target.value);
   }
+
+  handleColorChange(e) {
+    return this.props.onColorChange(this.props.paramId, e.target.value);
+  }
+
+  handleFontChange(e) {
+    return this.props.onFontChange(this.props.paramId, e.target.value);
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -27,6 +36,14 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onValueChange: (id, value) => {
       return dispatch({type: 'PARAM_VALUE_CHANGE', value: value, id: id});
+    },
+
+    onColorChange: (id, color) => {
+      return dispatch({type: 'PARAM_COLOR_CHANGE', color: color, id: id});
+    },
+
+    onFontChange: (id, font) => {
+      return dispatch({type: 'PARAM_FONT_CHANGE', font: font, id: id});
     }
   }
 }

@@ -1,1 +1,2 @@
+//= require ./fonts
 //= require ./index

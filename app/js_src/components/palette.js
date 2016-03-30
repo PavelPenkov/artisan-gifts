@@ -5,53 +5,60 @@ import { transformFrame, changeFrameType } from '../actions'
 
 class _Palette extends React.Component {
   render() {
-    return (<div className="palette">
-      <div>Frame: { this.props.frame.name }</div>
-      <table>
-        <tbody>
-          <tr>
-            <td>Type</td>
-            <td>
-              <select value={ this.props.frame.type } onChange= { (e) => this.handleTypeChange(e) } >
-                <option value="text">Text</option>
-                <option value="overlay">Overlay</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>Param</td>
-            <td>
-              <input type="text" value={ this.props.frame.param} onChange= { (e) => this.handleParamChange(e) } />
-            </td>
-          </tr>
-          <tr>
-            <td>Top</td>
-            <td>
-              <input type="range" onChange={ (e) => this.handlePosChange(e, 'top') } value={ this.props.frame.top } min="0" max={ this.props.height } />
-            </td>
-          </tr>
-          <tr>
-            <td>Left</td>
-            <td>
-              <input type="range" onChange={ (e) => this.handlePosChange(e, 'left') } value={ this.props.frame.left } min="0" max={ this.props.width } />
-            </td>
-          </tr>
-          <tr>
-            <td>Width</td>
-            <td>
-              <input type="range" onChange={ (e) => this.handlePosChange(e, 'width') } value= { this.props.frame.width } min="0" max={this.props.width } />
-            </td>
-          </tr>
-          <tr>
-            <td>Height</td>
-            <td>
-              <input type="range" onChange={ (e) => this.handlePosChange(e, 'height') } value = { this.props.frame.height } min="0" max={this.props.height} />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-   );
+    let fontOptions = _.map(window.__fonts, (font, i) => <option key={i} value={font}>{font}</option>)
+    var extraControls;
+    if(this.props.frame.type === 'text') {
+      extraControls = (
+        <div>
+          <div>
+            Font:
+            <select value={ this.props.frame.font }  onChange= { (e) => this.handleFontChange(e) }>
+              { fontOptions }
+            </select>
+          </div>
+          <div>
+            Color: <input type="color" value={ this.props.frame.color} onChange= { (e) => this.handleColorChange(e) } />
+          </div>
+        </div>
+      )
+    } else {
+      extraControls = <div></div>
+    }
+    return (
+      <div className="palette">
+        <div>Frame: { this.props.frame.name }</div>
+        <div>
+          Type:
+          <select value={ this.props.frame.type } onChange= { (e) => this.handleTypeChange(e) } >
+            <option value="text">Text</option>
+            <option value="overlay">Overlay</option>
+          </select>
+        </div>
+        <div>
+          Param
+          <input type="text" value={ this.props.frame.param} onChange= { (e) => this.handleParamChange(e) } />
+        </div>
+        <div>
+          Top
+          <input type="range" onChange={ (e) => this.handlePosChange(e, 'top') } value={ this.props.frame.top } min="0" max={ this.props.height } />
+        </div>
+        <div>
+          Left
+          <input type="range" onChange={ (e) => this.handlePosChange(e, 'left') } value={ this.props.frame.left } min="0" max={ this.props.width } />
+        </div>
+        <div>
+          Width
+          <input type="range" onChange={ (e) => this.handlePosChange(e, 'width') } value= { this.props.frame.width } min="0" max={this.props.width } />
+        </div>
+        <div>
+          Height
+          <input type="range" onChange={ (e) => this.handlePosChange(e, 'height') } value = { this.props.frame.height } min="0" max={this.props.height} />
+        </div>
+        <div>
+          { extraControls }
+        </div>
+      </div>
+    );
   }
 
   handlePosChange(e, property) {
@@ -65,6 +72,14 @@ class _Palette extends React.Component {
   handleParamChange(e) {
     return this.props.frameParamChange(this.props.frame.id, e.target.value);
   }
+
+  handleColorChange(e) {
+    return this.props.frameColorChange(this.props.frame.id, e.target.value);
+  }
+
+  handleFontChange(e) {
+    return this.props.frameFontChange(this.props.frame.id, e.target.value);
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -75,18 +90,26 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => { return {
-    frameDimChange: (id, property, val) => {
-      return dispatch(transformFrame(id, property, val));
-    },
+  frameDimChange: (id, property, val) => {
+    return dispatch(transformFrame(id, property, val));
+  },
 
-    frameTypeChange: (id, type) => {
-      return dispatch({type: 'FRAME_TYPE_CHANGE', id: id, newType: type});
-    },
+  frameTypeChange: (id, type) => {
+    return dispatch({type: 'FRAME_TYPE_CHANGE', id: id, newType: type});
+  },
 
-    frameParamChange: (id, name) => {
-      return dispatch({type: 'FRAME_PARAM_CHANGE', id: id, name: name});
-    }
+  frameParamChange: (id, name) => {
+    return dispatch({type: 'FRAME_PARAM_CHANGE', id: id, name: name});
+  },
+
+  frameColorChange: (id, color) => {
+    return dispatch({type: 'FRAME_COLOR_CHANGE', color: color, id: id});
+  },
+
+  frameFontChange: (id, font) => {
+    return dispatch({type: 'FRAME_FONT_CHANGE', font: font, id: id});
   }
+}
 }
 
 const Palette = connect(mapStateToProps, mapDispatchToProps)(_Palette)

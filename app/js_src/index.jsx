@@ -53,6 +53,8 @@ const ADD_PARAM = 'ADD_PARAM'
 const PARAM_NAME_CHANGE = 'PARAM_NAME_CHANGE'
 const PARAM_TYPE_CHANGE = 'PARAM_TYPE_CHANGE'
 const PARAM_VALUE_CHANGE = 'PARAM_VALUE_CHANGE'
+const FRAME_FONT_CHANGE = 'FRAME_FONT_CHANGE'
+const FRAME_COLOR_CHANGE = 'FRAME_COLOR_CHANGE'
 const PARAM_DELETE = 'PARAM_DELETE'
 const FRAME_TRANSFORM = 'FRAME_TRANSFORM'
 const FRAME_TYPE_CHANGE = 'FRAME_TYPE_CHANGE'
@@ -76,12 +78,14 @@ const addFrame = (state) => {
   let frame = {
     id: uuid.v1(),
     name: `Frame_${nextFrameSuffix++}`,
-    type: 'overlay',
+    type: 'text',
     top: 0,
     left: 0,
     width: 300,
     height: 200,
-    param: ''
+    param: '',
+    font: 'fixed',
+    color: '#FFFFFF'
   }
 
   let newFrames = state.layout.frames.concat(frame);
@@ -95,7 +99,7 @@ const artisanReducer = function(state = initialState, action) {
       var newLayout = Object.assign({}, state.layout, { background: {url: action.url, id: action.id }});
       return Object.assign({}, state, { layout: newLayout });
     case ADD_PARAM:
-      let p = { id: uuid.v1(), name: `text_${nextParamSuffix++}`, type: 'text', value: ''}
+      let p = { id: uuid.v1(), name: `text_${nextParamSuffix++}`, type: 'text', value: '', font: 'fixed', color: '#FFFFFF' }
       return Object.assign({}, state, { context: { params: state.context.params.concat(p)}});
     case PARAM_DELETE:
       var newParams = _.filter(state.context.params, (p) => p.id !== action.id)
@@ -114,17 +118,19 @@ const artisanReducer = function(state = initialState, action) {
       var newParams = _.map(state.context.params, (p) => {
         return (p.id === action.id ? Object.assign({}, p, { value: action.value }) : p);
       })
-      var newState = Object.assign({}, state, { context: { params: newParams }});
-      return newState;
+      return Object.assign({}, state, { context: { params: newParams }});
     case FRAME_TRANSFORM:
       let newProp = {};
       newProp[action.property] = action.value;
       return updatedFrame(state, action.id, newProp);
     case FRAME_TYPE_CHANGE:
-      console.log('In frame_type_change');
       return updatedFrame(state, action.id, {type: action.newType});
     case FRAME_PARAM_CHANGE:
       return updatedFrame(state, action.id, {param: action.name });
+    case FRAME_COLOR_CHANGE:
+      return updatedFrame(state, action.id, {color: action.color });
+    case FRAME_FONT_CHANGE:
+      return updatedFrame(state, action.id, {font: action.font });
     case SET_DIMENSIONS:
       return Object.assign({}, state, {width: action.width, height: action.height });
     case ADD_FRAME:
