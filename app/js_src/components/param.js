@@ -19,21 +19,21 @@ class _Param extends React.Component {
     return (
       <div className="palette">
         <div>
-          Name:
+          Название:
           <input type="text" value={ this.props.name } onChange={ (e) => this.handleNameChange(e) } />
         </div>
         <div>
-          Type:
+          Тип:
             <select value={ this.props.type } onChange={ (e) => this.handleTypeChange(e) } >
-              <option value="text">Text</option>
-              <option value="image">Image</option>
+              <option value="text">Текст</option>
+              <option value="image">Фото</option>
             </select>
         </div>
         <div>
           { paramEditor }
         </div>
         <div>
-          <button onClick={ () => this.handleDeleteClick() }>Delete</button>
+          <button onClick={ () => this.handleDeleteClick() }>Удалить</button>
         </div>
       </div>
     )

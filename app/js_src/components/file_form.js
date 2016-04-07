@@ -11,10 +11,13 @@ class FileForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={ (e) => this.handleSubmit(e) } encType="multipart/form-data">
-        <input type="file" onChange={(e) => this.handleFile(e) } accept="image/png,image/jpeg" />
-        <progress value={this.state.progress} />
-      </form>
+      <div>
+        <div>Загрузить фон</div>
+        <form onSubmit={ (e) => this.handleSubmit(e) } encType="multipart/form-data">
+          <input type="file" onChange={(e) => this.handleFile(e) } accept="image/png,image/jpeg" />
+          <progress value={this.state.progress} />
+        </form>
+      </div>
     );
   }
 

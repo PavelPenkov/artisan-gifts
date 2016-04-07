@@ -8,7 +8,7 @@ class _Preview extends React.Component {
     return(
       <div>
         <div>
-          <button onClick={() => this.handleClick() }>Preview</button>
+          <button onClick={() => this.handleClick() }>Предварительный просмотр</button>
         </div>
         <img src={ this.props.url }></img>
       </div>

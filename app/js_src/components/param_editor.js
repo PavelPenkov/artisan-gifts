@@ -11,7 +11,7 @@ class _ParamEditor extends React.Component {
       <div>
         <div>
           <hr />
-          <h2>Params:</h2>
+          <h2>Параметры:</h2>
           <br />
           { params }
         </div>

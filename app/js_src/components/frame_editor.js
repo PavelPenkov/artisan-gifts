@@ -15,7 +15,7 @@ class _FrameEditor extends React.Component {
           <br />
           { palettes }
         </div>
-        <button onClick={ () => this.props.handleAdd() }>Add frame</button>
+        <button onClick={ () => this.props.handleAdd() }>Добавить блок</button>
       </div>
     )
   }

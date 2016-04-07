@@ -6,6 +6,7 @@ import uuid from 'node-uuid'
 import { Provider } from 'react-redux'
 import App from './components/app'
 import request from 'superagent'
+import update from 'react-addons-update'
 
 //const initialState = {
   //layout: {

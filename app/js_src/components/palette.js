@@ -11,13 +11,13 @@ class _Palette extends React.Component {
       extraControls = (
         <div>
           <div>
-            Font:
+            Шрифт
             <select value={ this.props.frame.font }  onChange= { (e) => this.handleFontChange(e) }>
               { fontOptions }
             </select>
           </div>
           <div>
-            Color: <input type="color" value={ this.props.frame.color} onChange= { (e) => this.handleColorChange(e) } />
+            Цвет <input type="color" value={ this.props.frame.color} onChange= { (e) => this.handleColorChange(e) } />
           </div>
         </div>
       )
@@ -26,32 +26,32 @@ class _Palette extends React.Component {
     }
     return (
       <div className="palette">
-        <div>Frame: { this.props.frame.name }</div>
+        <div>Блок { this.props.frame.name }</div>
         <div>
-          Type:
+          Тип
           <select value={ this.props.frame.type } onChange= { (e) => this.handleTypeChange(e) } >
-            <option value="text">Text</option>
-            <option value="overlay">Overlay</option>
+            <option value="text">Текст</option>
+            <option value="overlay">Картинка</option>
           </select>
         </div>
         <div>
-          Param
+          Брать значение из параметра
           <input type="text" value={ this.props.frame.param} onChange= { (e) => this.handleParamChange(e) } />
         </div>
         <div>
-          Top
+          Верхний край
           <input type="range" onChange={ (e) => this.handlePosChange(e, 'top') } value={ this.props.frame.top } min="0" max={ this.props.height } />
         </div>
         <div>
-          Left
+          Левый край
           <input type="range" onChange={ (e) => this.handlePosChange(e, 'left') } value={ this.props.frame.left } min="0" max={ this.props.width } />
         </div>
         <div>
-          Width
+          Ширина
           <input type="range" onChange={ (e) => this.handlePosChange(e, 'width') } value= { this.props.frame.width } min="0" max={this.props.width } />
         </div>
         <div>
-          Height
+          Высота
           <input type="range" onChange={ (e) => this.handlePosChange(e, 'height') } value = { this.props.frame.height } min="0" max={this.props.height} />
         </div>
         <div>
