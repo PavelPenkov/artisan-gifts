@@ -1,0 +1,5 @@
+<script type="text/javascript" >
+  var template = <%= @template.to_json.html_safe %>;
+</script>
+<h2>Редактирование шаблона <%= @template.display_name %></h2>
+<%= render 'editor' %>

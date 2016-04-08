@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'sandbox/fetch'
+
   get 'home/index'
   resources :images
 
@@ -8,7 +10,7 @@ Rails.application.routes.draw do
     end
   end
 
-  root 'home#index'
+  root 'templates#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

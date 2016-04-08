@@ -12,7 +12,6 @@ class _Layout extends React.Component {
     return (
       <div id="background" className="layout">
         <img src={this.props.background} id="bg_image" />
-        <hr />
         { frames }
       </div>
     );

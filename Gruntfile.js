@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
   var files = {
-    './app/assets/javascripts/index.js': ['./app/js_src/index.jsx']
+    './app/assets/javascripts/edit.js': ['./app/js_src/edit.jsx'],
+    './app/assets/javascripts/test.js': ['./app/js_src/test.jsx']
   };
 
   var transform =  [

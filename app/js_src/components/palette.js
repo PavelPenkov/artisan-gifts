@@ -37,7 +37,7 @@ class _Palette extends React.Component {
       extraControls = <div></div>
     }
     return (
-      <div className="palette">
+      <span className="palette">
         <div>Блок { this.props.frame.name }</div>
         <table>
           <tbody>
@@ -75,7 +75,10 @@ class _Palette extends React.Component {
         <div>
           { extraControls }
         </div>
-      </div>
+        <div>
+          <button onClick={ () => this.handleDeleteClick()}>Удалить</button>
+        </div>
+      </span>
     );
   }
 
@@ -98,6 +101,10 @@ class _Palette extends React.Component {
   handleFontChange(e) {
     return this.props.frameFontChange(this.props.frame.id, e.target.value);
   }
+
+  handleDeleteClick() {
+    return this.props.deleteFrame(this.props.frame.id);
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -107,26 +114,31 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => { return {
-  frameDimChange: (id, property, val) => {
-    return dispatch(transformFrame(id, property, val));
-  },
+const mapDispatchToProps = (dispatch) => { 
+  return {
+    frameDimChange: (id, property, val) => {
+      return dispatch(transformFrame(id, property, val));
+    },
 
-  frameTypeChange: (id, type) => {
-    return dispatch({type: 'FRAME_TYPE_CHANGE', id: id, newType: type});
-  },
+    frameTypeChange: (id, type) => {
+      return dispatch({type: 'FRAME_TYPE_CHANGE', id: id, newType: type});
+    },
 
-  frameParamChange: (id, name) => {
-    return dispatch({type: 'FRAME_PARAM_CHANGE', id: id, name: name});
-  },
+    frameParamChange: (id, name) => {
+      return dispatch({type: 'FRAME_PARAM_CHANGE', id: id, name: name});
+    },
 
-  frameColorChange: (id, color) => {
-    return dispatch({type: 'FRAME_COLOR_CHANGE', color: color, id: id});
-  },
+    frameColorChange: (id, color) => {
+      return dispatch({type: 'FRAME_COLOR_CHANGE', color: color, id: id});
+    },
 
-  frameFontChange: (id, font) => {
-    return dispatch({type: 'FRAME_FONT_CHANGE', font: font, id: id});
-  }
+    frameFontChange: (id, font) => {
+      return dispatch({type: 'FRAME_FONT_CHANGE', font: font, id: id});
+    },
+
+    deleteFrame: (id) => {
+      return dispatch({type: 'DELETE_FRAME', id: id});
+    }
 }
 }
 

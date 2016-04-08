@@ -1,0 +1,13 @@
+<h1>Шаблоны</h1>
+<div>
+  <% @templates.each do |template| %>
+    <div>
+      <span><%= template.display_name %></span>
+      <%= link_to 'Просмотр', preview_template_path(template) %>
+      <%= link_to 'Редактировать', edit_template_path(template) %>
+    </div>
+  <% end %>
+</div>
+<div>
+  <%= link_to 'Новый шаблон', new_template_path %>
+</div>

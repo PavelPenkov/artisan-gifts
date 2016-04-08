@@ -1,4 +1,6 @@
-const changeBackground = (id, url) => {
+import uuid from 'node-uuid'
+
+export const changeBackground = (id, url) => {
   return {
     type: 'CHANGE_BACKGROUND',
     id: id,
@@ -6,14 +8,14 @@ const changeBackground = (id, url) => {
   }
 }
 
-const deleteParam = (id) => {
+export const deleteParam = (id) => {
   return {
     type: 'PARAM_DELETE',
     id: id
   }
 }
 
-const transformFrame = (id, property, value) => {
+export const transformFrame = (id, property, value) => {
   return {
     type: 'FRAME_TRANSFORM',
     id: id,
@@ -22,7 +24,7 @@ const transformFrame = (id, property, value) => {
   }
 }
 
-const changeFrameType = (id, newType) => {
+export const changeFrameType = (id, newType) => {
   return {
     type: 'FRAME_CHANGE_TYPE',
     id: id,
@@ -30,18 +32,40 @@ const changeFrameType = (id, newType) => {
   }
 }
 
-const fetchPreview = () => {
+export const fetchPreview = () => {
   return {
     type: 'FETCH_PREVIEW'
   }
 }
 
-const showPreview = (url) => {
+export const showPreview = (url) => {
   return {
     type: 'SHOW_PREVIEW',
     url: url
   }
 }
 
+let nextFrameSuffix = 0
 
-export { changeBackground, deleteParam, transformFrame, fetchPreview, changeFrameType }
+export const createFrame = () => {
+  let suffix = nextFrameSuffix++
+  let frame = {
+    id: uuid.v1(),
+    name: `Блок_${suffix}`,
+    type: 'text',
+    top: 0,
+    left: 0,
+    width: 300,
+    height: 200,
+    param: `Поле_${suffix}`,
+    font: 'fixed',
+    color: '#FFFFFF'
+  }
+
+  return {
+    type: 'ADD_FRAME',
+    frame: frame
+  }
+}
+
+
