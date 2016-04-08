@@ -15,7 +15,7 @@ class _ParamEditor extends React.Component {
           <br />
           { params }
         </div>
-        <button onClick={ () => this.props.handleAdd() }>Add param</button>
+        <button onClick={ () => this.props.handleAdd() }>Добавить поле</button>
       </div>
     )
   }

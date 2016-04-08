@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   get 'home/index'
   resources :images
 
-  resources :layouts, only: [] do
-    collection do
+  resources :templates do
+    member do
       post :preview
     end
   end

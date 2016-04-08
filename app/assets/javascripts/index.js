@@ -371,7 +371,7 @@ var _FrameEditor = function (_React$Component) {
           _react2.default.createElement(
             'h2',
             null,
-            'Frames'
+            'Блоки'
           ),
           _react2.default.createElement('br', null),
           palettes
@@ -629,6 +629,10 @@ var _reactRedux = require('react-redux');
 
 var _actions = require('../actions');
 
+var _nodeUuid = require('node-uuid');
+
+var _nodeUuid2 = _interopRequireDefault(_nodeUuid);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -640,13 +644,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var _Palette = function (_React$Component) {
   _inherits(_Palette, _React$Component);
 
-  function _Palette() {
+  function _Palette(props) {
     _classCallCheck(this, _Palette);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(_Palette).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_Palette).call(this, props));
+
+    _this.state = { uniqueId: _nodeUuid2.default.v4() };
+    return _this;
   }
 
   _createClass(_Palette, [{
+    key: 'elementId',
+    value: function elementId(baseName) {
+      return baseName + '-' + this.state.uniqueId;
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -666,10 +678,14 @@ var _Palette = function (_React$Component) {
           _react2.default.createElement(
             'div',
             null,
-            'Шрифт',
+            _react2.default.createElement(
+              'label',
+              { htmlFor: this.elementId('font') },
+              'Шрифт'
+            ),
             _react2.default.createElement(
               'select',
-              { value: this.props.frame.font, onChange: function onChange(e) {
+              { id: this.elementId('font'), value: this.props.frame.font, onChange: function onChange(e) {
                   return _this2.handleFontChange(e);
                 } },
               fontOptions
@@ -678,8 +694,12 @@ var _Palette = function (_React$Component) {
           _react2.default.createElement(
             'div',
             null,
-            'Цвет ',
-            _react2.default.createElement('input', { type: 'color', value: this.props.frame.color, onChange: function onChange(e) {
+            _react2.default.createElement(
+              'label',
+              { htmlFor: this.elementId('color') },
+              'Цвет'
+            ),
+            _react2.default.createElement('input', { id: this.elementId('color'), type: 'color', value: this.props.frame.color, onChange: function onChange(e) {
                 return _this2.handleColorChange(e);
               } })
           )
@@ -697,63 +717,104 @@ var _Palette = function (_React$Component) {
           this.props.frame.name
         ),
         _react2.default.createElement(
-          'div',
+          'table',
           null,
-          'Тип',
           _react2.default.createElement(
-            'select',
-            { value: this.props.frame.type, onChange: function onChange(e) {
-                return _this2.handleTypeChange(e);
-              } },
+            'tbody',
+            null,
             _react2.default.createElement(
-              'option',
-              { value: 'text' },
-              'Текст'
-            ),
-            _react2.default.createElement(
-              'option',
-              { value: 'overlay' },
-              'Картинка'
+              'tr',
+              null,
+              _react2.default.createElement(
+                'td',
+                null,
+                ' ',
+                _react2.default.createElement(
+                  'label',
+                  { htmlFor: this.elementId('type') },
+                  'Tип'
+                )
+              ),
+              _react2.default.createElement(
+                'td',
+                null,
+                _react2.default.createElement(
+                  'select',
+                  { id: this.elementId('type'), value: this.props.frame.type, onChange: function onChange(e) {
+                      return _this2.handleTypeChange(e);
+                    } },
+                  _react2.default.createElement(
+                    'option',
+                    { value: 'text' },
+                    'Текст'
+                  ),
+                  _react2.default.createElement(
+                    'option',
+                    { value: 'overlay' },
+                    'Картинка'
+                  )
+                )
+              )
             )
           )
         ),
         _react2.default.createElement(
           'div',
           null,
-          'Брать значение из параметра',
-          _react2.default.createElement('input', { type: 'text', value: this.props.frame.param, onChange: function onChange(e) {
+          _react2.default.createElement(
+            'label',
+            { htmlFor: this.elementId('param') },
+            'Брать значение из параметра'
+          ),
+          _react2.default.createElement('input', { id: this.elementId('param'), type: 'text', value: this.props.frame.param, onChange: function onChange(e) {
               return _this2.handleParamChange(e);
             } })
         ),
         _react2.default.createElement(
           'div',
           null,
-          'Верхний край',
-          _react2.default.createElement('input', { type: 'range', onChange: function onChange(e) {
+          _react2.default.createElement(
+            'label',
+            { htmlFor: this.elementId('top') },
+            'Верхний край'
+          ),
+          _react2.default.createElement('input', { id: this.elementId('top'), type: 'range', onChange: function onChange(e) {
               return _this2.handlePosChange(e, 'top');
             }, value: this.props.frame.top, min: '0', max: this.props.height })
         ),
         _react2.default.createElement(
           'div',
           null,
-          'Левый край',
-          _react2.default.createElement('input', { type: 'range', onChange: function onChange(e) {
+          _react2.default.createElement(
+            'label',
+            { htmlFor: this.elementId('left') },
+            'Левый край'
+          ),
+          _react2.default.createElement('input', { id: this.elementId('left'), type: 'range', onChange: function onChange(e) {
               return _this2.handlePosChange(e, 'left');
             }, value: this.props.frame.left, min: '0', max: this.props.width })
         ),
         _react2.default.createElement(
           'div',
           null,
-          'Ширина',
-          _react2.default.createElement('input', { type: 'range', onChange: function onChange(e) {
+          _react2.default.createElement(
+            'label',
+            { htmlFor: this.elementId('width') },
+            'Ширина'
+          ),
+          _react2.default.createElement('input', { id: this.elementId('width'), type: 'range', onChange: function onChange(e) {
               return _this2.handlePosChange(e, 'width');
             }, value: this.props.frame.width, min: '0', max: this.props.width })
         ),
         _react2.default.createElement(
           'div',
           null,
-          'Высота',
-          _react2.default.createElement('input', { type: 'range', onChange: function onChange(e) {
+          _react2.default.createElement(
+            'label',
+            { htmlFor: this.elementId('height') },
+            'Высота'
+          ),
+          _react2.default.createElement('input', { id: this.elementId('width'), type: 'range', onChange: function onChange(e) {
               return _this2.handlePosChange(e, 'height');
             }, value: this.props.frame.height, min: '0', max: this.props.height })
         ),
@@ -829,7 +890,7 @@ var Palette = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Pal
 
 exports.default = Palette;
 
-},{"../actions":1,"react":405,"react-redux":243}],9:[function(require,module,exports){
+},{"../actions":1,"node-uuid":238,"react":405,"react-redux":243}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -899,7 +960,7 @@ var _Param = function (_React$Component) {
         _react2.default.createElement(
           'div',
           null,
-          'Type:',
+          'Тип:',
           _react2.default.createElement(
             'select',
             { value: this.props.type, onChange: function onChange(e) {
@@ -908,12 +969,12 @@ var _Param = function (_React$Component) {
             _react2.default.createElement(
               'option',
               { value: 'text' },
-              'Text'
+              'Текст'
             ),
             _react2.default.createElement(
               'option',
               { value: 'image' },
-              'Image'
+              'Фото'
             )
           )
         ),
@@ -930,7 +991,7 @@ var _Param = function (_React$Component) {
             { onClick: function onClick() {
                 return _this2.handleDeleteClick();
               } },
-            'Delete'
+            'Удалить'
           )
         )
       );
@@ -1037,7 +1098,7 @@ var _ParamEditor = function (_React$Component) {
           _react2.default.createElement(
             'h2',
             null,
-            'Params:'
+            'Параметры:'
           ),
           _react2.default.createElement('br', null),
           params
@@ -1047,7 +1108,7 @@ var _ParamEditor = function (_React$Component) {
           { onClick: function onClick() {
               return _this2.props.handleAdd();
             } },
-          'Add param'
+          'Добавить поле'
         )
       );
     }
@@ -1126,7 +1187,7 @@ var _Preview = function (_React$Component) {
             { onClick: function onClick() {
                 return _this2.handleClick();
               } },
-            'Preview'
+            'Предварительный просмотр'
           )
         ),
         _react2.default.createElement('img', { src: this.props.url })
@@ -1373,7 +1434,7 @@ var updatedFrame = function updatedFrame(state, id, props) {
 var addFrame = function addFrame(state) {
   var frame = {
     id: _nodeUuid2.default.v1(),
-    name: 'Frame_' + nextFrameSuffix++,
+    name: 'Блок_' + nextFrameSuffix++,
     type: 'text',
     top: 0,
     left: 0,

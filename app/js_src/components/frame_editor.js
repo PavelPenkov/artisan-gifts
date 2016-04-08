@@ -11,7 +11,7 @@ class _FrameEditor extends React.Component {
       <div>
         <div>
           <hr />
-          <h2>Frames</h2>
+          <h2>Блоки</h2>
           <br />
           { palettes }
         </div>

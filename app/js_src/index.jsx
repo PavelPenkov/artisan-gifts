@@ -78,7 +78,7 @@ const updatedFrame = (state, id, props) => {
 const addFrame = (state) => {
   let frame = {
     id: uuid.v1(),
-    name: `Frame_${nextFrameSuffix++}`,
+    name: `Блок_${nextFrameSuffix++}`,
     type: 'text',
     top: 0,
     left: 0,

@@ -2,8 +2,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { transformFrame, changeFrameType } from '../actions'
+import uuid from 'node-uuid'
 
 class _Palette extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {uniqueId: uuid.v4()}
+  }
+
+  elementId(baseName) {
+    return `${baseName}-${this.state.uniqueId}`
+  }
+
+
   render() {
     let fontOptions = _.map(window.__fonts, (font, i) => <option key={i} value={font}>{font}</option>)
     var extraControls;
@@ -11,13 +22,14 @@ class _Palette extends React.Component {
       extraControls = (
         <div>
           <div>
-            Шрифт
-            <select value={ this.props.frame.font }  onChange= { (e) => this.handleFontChange(e) }>
+            <label htmlFor={ this.elementId('font') }>Шрифт</label>
+            <select id={ this.elementId('font') }value={ this.props.frame.font }  onChange= { (e) => this.handleFontChange(e) }>
               { fontOptions }
             </select>
           </div>
           <div>
-            Цвет <input type="color" value={ this.props.frame.color} onChange= { (e) => this.handleColorChange(e) } />
+            <label htmlFor={ this.elementId('color') }>Цвет</label>
+            <input id={ this.elementId('color') } type="color" value={ this.props.frame.color} onChange= { (e) => this.handleColorChange(e) } />
           </div>
         </div>
       )
@@ -27,32 +39,38 @@ class _Palette extends React.Component {
     return (
       <div className="palette">
         <div>Блок { this.props.frame.name }</div>
+        <table>
+          <tbody>
+            <tr>
+              <td> <label htmlFor={ this.elementId('type') }>Tип</label></td>
+              <td>
+                <select id={ this.elementId('type') } value={ this.props.frame.type } onChange= { (e) => this.handleTypeChange(e) } >
+                  <option value="text">Текст</option>
+                  <option value="overlay">Картинка</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <div>
-          Тип
-          <select value={ this.props.frame.type } onChange= { (e) => this.handleTypeChange(e) } >
-            <option value="text">Текст</option>
-            <option value="overlay">Картинка</option>
-          </select>
+          <label htmlFor={ this.elementId('param') }>Брать значение из параметра</label>
+          <input id={ this.elementId('param') } type="text" value={ this.props.frame.param} onChange= { (e) => this.handleParamChange(e) } />
         </div>
         <div>
-          Брать значение из параметра
-          <input type="text" value={ this.props.frame.param} onChange= { (e) => this.handleParamChange(e) } />
+          <label htmlFor={ this.elementId('top') }>Верхний край</label>
+          <input id={ this.elementId('top') } type="range" onChange={ (e) => this.handlePosChange(e, 'top') } value={ this.props.frame.top } min="0" max={ this.props.height } />
         </div>
         <div>
-          Верхний край
-          <input type="range" onChange={ (e) => this.handlePosChange(e, 'top') } value={ this.props.frame.top } min="0" max={ this.props.height } />
+          <label htmlFor={ this.elementId('left') }>Левый край</label>
+          <input id={ this.elementId('left') } type="range" onChange={ (e) => this.handlePosChange(e, 'left') } value={ this.props.frame.left } min="0" max={ this.props.width } />
         </div>
         <div>
-          Левый край
-          <input type="range" onChange={ (e) => this.handlePosChange(e, 'left') } value={ this.props.frame.left } min="0" max={ this.props.width } />
+          <label htmlFor={ this.elementId('width') }>Ширина</label>
+          <input id={ this.elementId('width') } type="range" onChange={ (e) => this.handlePosChange(e, 'width') } value= { this.props.frame.width } min="0" max={this.props.width } />
         </div>
         <div>
-          Ширина
-          <input type="range" onChange={ (e) => this.handlePosChange(e, 'width') } value= { this.props.frame.width } min="0" max={this.props.width } />
-        </div>
-        <div>
-          Высота
-          <input type="range" onChange={ (e) => this.handlePosChange(e, 'height') } value = { this.props.frame.height } min="0" max={this.props.height} />
+          <label htmlFor={ this.elementId('height') }>Высота</label>
+          <input id= { this.elementId('width') } type="range" onChange={ (e) => this.handlePosChange(e, 'height') } value = { this.props.frame.height } min="0" max={this.props.height} />
         </div>
         <div>
           { extraControls }

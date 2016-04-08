@@ -1,5 +1,5 @@
 require 'pp'
-class LayoutsController < ApplicationController
+class TemplatesController < ApplicationController
   def preview
     preview = Generator::Preview.from_json(params)
     path = preview.generate
