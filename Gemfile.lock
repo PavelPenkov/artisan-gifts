@@ -41,7 +41,7 @@ GEM
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
-    byebug (8.2.2)
+    byebug (8.2.3)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.8)
@@ -91,6 +91,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-byebug (3.3.0)
+      byebug (~> 8.0)
+      pry (~> 0.10)
     puma (3.2.0)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
@@ -187,7 +190,6 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_print
-  byebug
   coffee-rails
   jbuilder (~> 2.4)
   mini_magick
@@ -195,6 +197,7 @@ DEPENDENCIES
   paperclip
   pg
   pry
+  pry-byebug
   puma
   quiet_assets
   rails (= 4.2.6)

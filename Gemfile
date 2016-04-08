@@ -10,17 +10,16 @@ gem 'coffee-rails'
 gem 'paperclip'
 gem 'jbuilder', '~> 2.4'
 gem 'oj'
-gem 'puma'
 gem 'mini_magick'
 gem 'pg'
 
 group :development, :test do
-  gem 'byebug'
   gem 'rspec-rails', '~> 3.0'
 end
 
 group :production do
   gem 'rails_12factor'
+  gem 'puma'
 end
 
 group :development do
@@ -30,6 +29,7 @@ group :development do
   gem 'quiet_assets'
   gem 'awesome_print'
   gem 'pry'
+  gem 'pry-byebug'
 end
 
 group :assets do
