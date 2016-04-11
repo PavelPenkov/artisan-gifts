@@ -8,6 +8,10 @@ import FrameEditor from './frame_editor'
 import Preview from './preview'
 
 class App extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
   render() {
     return (
       <div>
@@ -24,6 +28,10 @@ class App extends React.Component {
         <Preview />
       </div>
     )
+  }
+
+  componentDidMount() {
+    console.log(this.props.dispatch);
   }
 }
 

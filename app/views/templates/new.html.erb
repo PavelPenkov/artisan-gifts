@@ -1,6 +1,7 @@
 <script type="text/javascript" >
   var template = <%= @template.data.to_json.html_safe %>;
-  var templateUrl = "<%= templates_path.html_safe %>.json";
+  var templateUrl = "<%= templates_path %>";
+  var submitMethod = 'POST';
 </script>
 <h2>Создание шаблона</h2>
 <%= render 'editor' %>

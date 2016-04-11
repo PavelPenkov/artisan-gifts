@@ -9,6 +9,8 @@ import update from 'react-addons-update'
 import thunk from 'redux-thunk'
 
 const initialState = template // set by server
+initialState.url = templateUrl
+initialState.method = submitMethod
 
 const CHANGE_BACKGROUND = 'CHANGE_BACKGROUND'
 const ADD_PARAM = 'ADD_PARAM'
@@ -26,6 +28,8 @@ const SHOW_PREVIEW = 'SHOW_PREVIEW'
 const ADD_FRAME = 'ADD_FRAME'
 const DELETE_FRAME = 'DELETE_FRAME'
 const LAYOUT_SAVED = 'LAYOUT_SAVED'
+const LAYOUT_SAVE_ERROR = 'LAYOUT_SAVE_ERROR'
+const LAYOUT_NAME_CHANGE = 'LAYOUT_NAME_CHANGE'
 
 let nextParamSuffix = 1;
 let nextFrameSuffix = 1;
@@ -74,7 +78,12 @@ const editorReducer = function(state = initialState, action) {
       });
     case LAYOUT_SAVED:
       alert('Шаблон сохранен');
+      return update(state, { method: { $set: 'PUT'}, url: { $set: action.url}})
+    case LAYOUT_SAVE_ERROR:
+      alert('Ошибка при сохранении шаблона');
       return state;
+    case LAYOUT_NAME_CHANGE:
+      return update(state, { layout: { name: { $set: action.name }}});
     default:
       return state;
   }

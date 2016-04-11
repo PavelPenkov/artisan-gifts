@@ -1,0 +1,6 @@
+<script>
+  var params = <%= @template.param_meta.to_json.html_safe %>;
+  var previewUrl = "<%= preview_template_path(@template) %>";
+</script>
+<h2>Витрина</h2>
+<%= render 'storefront' %>

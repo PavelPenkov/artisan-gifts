@@ -21,7 +21,7 @@ module Generator
         convert.size "#{width}x#{height}"
         convert.gravity :center
         convert.font font
-        convert.label value
+        convert.label(value || ' ')
         convert << label_name
       end
       bg = src

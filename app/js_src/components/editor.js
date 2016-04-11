@@ -6,11 +6,13 @@ import ParamEditor from './param_editor'
 import Palette from './palette'
 import FrameEditor from './frame_editor'
 import Preview from './preview'
+import Title from './title'
 
 class Editor extends React.Component {
   render() {
     return (
       <div>
+        <Title />
         <FileForm />
         <Layout />
         <FrameEditor />

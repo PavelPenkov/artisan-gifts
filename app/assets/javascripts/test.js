@@ -64,7 +64,7 @@ var _Panel = function (_Component) {
           _react2.default.createElement(
             'button',
             { onClick: function onClick() {
-                return _this2.props.handleClick();
+                return _this2.handleClick();
               } },
             'Update'
           )
@@ -106,7 +106,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 //}
 //}
 
-var Panel = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Panel);
+var Panel = (0, _reactRedux.connect)(mapStateToProps)(_Panel);
 
 var initialState = { name: '' };
 

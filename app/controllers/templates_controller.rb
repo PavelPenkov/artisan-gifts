@@ -20,7 +20,7 @@ class TemplatesController < ApplicationController
   end
 
   def create
-    @template = Template.new(data: params[:data])
+    @template = Template.new(data: params[:data], name: params[:data][:name])
 
     respond_to do |format|
       if @template.save
@@ -34,8 +34,9 @@ class TemplatesController < ApplicationController
   end
 
   def update
+    update_params = { data: params[:data], name: params[:data][:name] }
     respond_to do |format|
-      if @template.update(template_params)
+      if @template.update(update_params)
         format.html { redirect_to @template, notice: I18n.t('.updated') }
         format.json { render :show, status: :ok, location: @template }
       else
@@ -54,7 +55,14 @@ class TemplatesController < ApplicationController
   end
 
   def preview
-    preview = Generator::Preview.from_json(@template.data)
+    params.delete(:id)
+    ctx = @template.context_from_params(params)
+    ap ctx
+    json = {
+      layout: @template.data,
+      context: @template.context_from_params(params)
+    }
+    preview = Generator::Preview.from_json(json)
     path = preview.generate
     @image = Image.create(image: File.open(path))
 
@@ -67,10 +75,6 @@ class TemplatesController < ApplicationController
 
   def set_template
     @template = Template.find(params[:id])
-  end
-
-  def template_params
-    params.require(:template).permit(data: {})
   end
 
   def default_template

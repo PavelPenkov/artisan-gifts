@@ -21,51 +21,43 @@ class _FrameEditor extends React.Component {
           <br />
           { palettes }
         </div>
-        <button onClick={ () => this.props.handleAdd() }>Добавить блок</button>
-        <button onClick={ () => this.props.handleSaveClick() }>Сохранить</button>
+        <button onClick={ () => this.handleAddClick() }>Добавить блок</button>
+        <button onClick={ () => this.handleSaveClick() }>Сохранить</button>
       </div>
     )
   }
 
+  handleAddClick() {
+    return this.props.dispatch(createFrame());
+  }
+
+  handleSaveClick() {
+    fetch(this.props.url, {
+      method: this.props.method,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({data: this.props.theState.layout})
+    }).then((response) => {
+      if(response.status >= 400) {
+        this.props.dispatch({type: 'LAYOUT_SAVE_ERROR'})
+      } else {
+        this.props.dispatch({type: 'LAYOUT_SAVED', url: response.headers.get('Location')})
+      }
+    })
+  }
 }
 
 const mapStateToProps = (state) => {
   return {
     frames: state.layout.frames,
-    theState: state
+    theState: state,
+    method: state.method,
+    url: state.url
   }
 }
 
-//const mapDispatchToProps = (dispatch) => {
-  //return {
-    //handleAdd: () => {
-      //dispatch(createFrame());
-    //},
-    //handleSaveClick: () => {
-      //return fetchAction();
-    //}
-  //}
-//}
-//
-
-const mapDispatchToProps = {
-  handleAdd: () => {
-    return (
-      (dispatch) => {
-        dispatch(createFrame());
-      }
-    )
-  },
-  handleSaveClick: () => {
-    return (
-      (dispatch) => {
-        dispatch(createFrame());
-      }
-    )
-  }
-}
-
-
-const FrameEditor = connect(mapStateToProps, mapDispatchToProps)(_FrameEditor)
+const FrameEditor = connect(mapStateToProps)(_FrameEditor)
 
 export default FrameEditor

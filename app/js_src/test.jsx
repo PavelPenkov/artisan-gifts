@@ -15,7 +15,7 @@ class _Panel extends Component {
       <div>
         <div>Name: { this.props.name }</div>
         <div>
-          <button onClick={ () => this.props.handleClick() }>Update</button>
+          <button onClick={ () => this.handleClick() }>Update</button>
         </div>
       </div>
     )
@@ -53,7 +53,7 @@ const mapDispatchToProps = (dispatch) => {
   //}
 //}
 
-const Panel = connect(mapStateToProps, mapDispatchToProps)(_Panel)
+const Panel = connect(mapStateToProps)(_Panel)
 
 const initialState = { name: '' }
 
