@@ -8,7 +8,7 @@ body {
 }
 
 .frame {
-  border: 5px solid black;
+  border: 5px solid white;
   position: absolute;
   z-index: 1;
 }
