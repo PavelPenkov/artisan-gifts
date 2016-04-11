@@ -79,7 +79,9 @@ var _Panel = function (_Component) {
 var fetchAction = function fetchAction() {
   return function (dispatch) {
     return (0, _isomorphicFetch2.default)('/templates/1.json').then(function (response) {
-      dispatch({ type: 'TEMPLATE', name: response.json() });
+      response.json().then(function (data) {
+        return dispatch({ type: 'TEMPLATE', name: data.name });
+      });
     });
   };
 };
@@ -90,11 +92,19 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-var mapDispatchToProps = {
-  handleClick: function handleClick() {
-    return fetchAction();
-  }
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    handleClick: function handleClick() {
+      return fetchAction();
+    }
+  };
 };
+
+//const mapDispatchToProps = {
+//handleClick: () => {
+//return fetchAction()
+//}
+//}
 
 var Panel = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Panel);
 

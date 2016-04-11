@@ -1,4 +1,8 @@
 import uuid from 'node-uuid'
+import promise from 'es6-promise'
+import fetch from 'isomorphic-fetch'
+
+promise.polyfill()
 
 export const changeBackground = (id, url) => {
   return {
@@ -68,4 +72,28 @@ export const createFrame = () => {
   }
 }
 
+export const fetchAction = () => {
+  return (
+    (dispatch) => {
+      return fetch('/templates/1.json').then((response) => {
+        response.json().then((data) => dispatch({type: 'LAYOUT_SAVED', name: data.name}))
+        }
+      )
+    }
+  )
+}
 
+export const saveLayout = (url, layout) => {
+  return(
+    (dispatch) => {
+      return fetch(url, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(layout)
+      }).then(() => dispatch({type: 'LAYOUT_SAVED'}))
+    }
+  )
+}

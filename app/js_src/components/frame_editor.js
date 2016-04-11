@@ -3,9 +3,10 @@ import React from 'react'
 import Palette from './palette'
 import _ from 'lodash'
 import { connect } from 'react-redux'
-import { createFrame } from '../actions'
+import { createFrame, fetchAction } from '../actions'
 import fetch from 'isomorphic-fetch'
 import promise from 'es6-promise'
+import { saveLayout } from '../actions'
 
 promise.polyfill()
 
@@ -21,25 +22,11 @@ class _FrameEditor extends React.Component {
           { palettes }
         </div>
         <button onClick={ () => this.props.handleAdd() }>Добавить блок</button>
-        <button onClick={ () => this.handleSaveClick() }>Сохранить</button>
+        <button onClick={ () => this.props.handleSaveClick() }>Сохранить</button>
       </div>
     )
   }
 
-  handleSaveClick() {
-    fetch(templateUrl, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        data: this.props.theState
-      })
-    }).then(() => {
-      this.props.handleSave()
-    })
-  }
 }
 
 const mapStateToProps = (state) => {
@@ -49,16 +36,35 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    handleAdd: () => {
-      dispatch(createFrame());
-    },
-    handleSave: () => {
-      return dispatch({type: 'LAYOUT_SAVED'});
-    }
+//const mapDispatchToProps = (dispatch) => {
+  //return {
+    //handleAdd: () => {
+      //dispatch(createFrame());
+    //},
+    //handleSaveClick: () => {
+      //return fetchAction();
+    //}
+  //}
+//}
+//
+
+const mapDispatchToProps = {
+  handleAdd: () => {
+    return (
+      (dispatch) => {
+        dispatch(createFrame());
+      }
+    )
+  },
+  handleSaveClick: () => {
+    return (
+      (dispatch) => {
+        dispatch(createFrame());
+      }
+    )
   }
 }
+
 
 const FrameEditor = connect(mapStateToProps, mapDispatchToProps)(_FrameEditor)
 

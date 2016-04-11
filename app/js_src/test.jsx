@@ -26,24 +26,32 @@ const fetchAction = () => {
   return (
     (dispatch) => {
       return fetch('/templates/1.json').then((response) => {
-        dispatch({type: 'TEMPLATE', name: response.json()})
+        response.json().then((data) => dispatch({type: 'TEMPLATE', name: data.name}))
         }
       )
     }
-  );
+  )
 }
 
 const mapStateToProps = (state) => {
   return {
-    name: state.name 
+    name: state.name
   }
 }
 
-const mapDispatchToProps = {
-  handleClick: () => {
-    return fetchAction();
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleClick: () => {
+      return fetchAction()
+    }
   }
 }
+
+//const mapDispatchToProps = {
+  //handleClick: () => {
+    //return fetchAction()
+  //}
+//}
 
 const Panel = connect(mapStateToProps, mapDispatchToProps)(_Panel)
 
@@ -65,10 +73,4 @@ render(
     <Panel />
   </Provider>,
   document.getElementById('main')
-);
-
-
-
-
-
-
+)

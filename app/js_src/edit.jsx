@@ -1,14 +1,14 @@
 import React from 'react'
 import { render } from 'react-dom'
 import _ from 'lodash'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import uuid from 'node-uuid'
 import { Provider } from 'react-redux'
 import Editor from './components/editor'
-import request from 'superagent'
 import update from 'react-addons-update'
+import thunk from 'redux-thunk'
 
-const initialState = template
+const initialState = template // set by server
 
 const CHANGE_BACKGROUND = 'CHANGE_BACKGROUND'
 const ADD_PARAM = 'ADD_PARAM'
@@ -80,7 +80,7 @@ const editorReducer = function(state = initialState, action) {
   }
 }
 
-const store = createStore(editorReducer);
+const store = createStore(editorReducer, applyMiddleware(thunk));
 
 render(
   <Provider store={ store } >

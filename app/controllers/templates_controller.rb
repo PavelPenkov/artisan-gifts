@@ -21,7 +21,6 @@ class TemplatesController < ApplicationController
 
   def create
     @template = Template.new(data: params[:data])
-    binding.pry
 
     respond_to do |format|
       if @template.save

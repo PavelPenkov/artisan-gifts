@@ -4,13 +4,23 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createFrame = exports.showPreview = exports.fetchPreview = exports.changeFrameType = exports.transformFrame = exports.deleteParam = exports.changeBackground = undefined;
+exports.saveLayout = exports.fetchAction = exports.createFrame = exports.showPreview = exports.fetchPreview = exports.changeFrameType = exports.transformFrame = exports.deleteParam = exports.changeBackground = undefined;
 
 var _nodeUuid = require('node-uuid');
 
 var _nodeUuid2 = _interopRequireDefault(_nodeUuid);
 
+var _es6Promise = require('es6-promise');
+
+var _es6Promise2 = _interopRequireDefault(_es6Promise);
+
+var _isomorphicFetch = require('isomorphic-fetch');
+
+var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_es6Promise2.default.polyfill();
 
 var changeBackground = exports.changeBackground = function changeBackground(id, url) {
   return {
@@ -80,7 +90,32 @@ var createFrame = exports.createFrame = function createFrame() {
   };
 };
 
-},{"node-uuid":241}],2:[function(require,module,exports){
+var fetchAction = exports.fetchAction = function fetchAction() {
+  return function (dispatch) {
+    return (0, _isomorphicFetch2.default)('/templates/1.json').then(function (response) {
+      response.json().then(function (data) {
+        return dispatch({ type: 'LAYOUT_SAVED', name: data.name });
+      });
+    });
+  };
+};
+
+var saveLayout = exports.saveLayout = function saveLayout(url, layout) {
+  return function (dispatch) {
+    return (0, _isomorphicFetch2.default)(url, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(layout)
+    }).then(function () {
+      return dispatch({ type: 'LAYOUT_SAVED' });
+    });
+  };
+};
+
+},{"es6-promise":14,"isomorphic-fetch":234,"node-uuid":241}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -401,29 +436,11 @@ var _FrameEditor = function (_React$Component) {
         _react2.default.createElement(
           'button',
           { onClick: function onClick() {
-              return _this2.handleSaveClick();
+              return _this2.props.handleSaveClick();
             } },
           'Сохранить'
         )
       );
-    }
-  }, {
-    key: 'handleSaveClick',
-    value: function handleSaveClick() {
-      var _this3 = this;
-
-      (0, _isomorphicFetch2.default)(templateUrl, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          data: this.props.theState
-        })
-      }).then(function () {
-        _this3.props.handleSave();
-      });
     }
   }]);
 
@@ -437,15 +454,29 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {
-    handleAdd: function handleAdd() {
+//const mapDispatchToProps = (dispatch) => {
+//return {
+//handleAdd: () => {
+//dispatch(createFrame());
+//},
+//handleSaveClick: () => {
+//return fetchAction();
+//}
+//}
+//}
+//
+
+var mapDispatchToProps = {
+  handleAdd: function handleAdd() {
+    return function (dispatch) {
       dispatch((0, _actions.createFrame)());
-    },
-    handleSave: function handleSave() {
-      return dispatch({ type: 'LAYOUT_SAVED' });
-    }
-  };
+    };
+  },
+  handleSaveClick: function handleSaveClick() {
+    return function (dispatch) {
+      dispatch((0, _actions.createFrame)());
+    };
+  }
 };
 
 var FrameEditor = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_FrameEditor);
@@ -565,7 +596,7 @@ var ImageParam = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_
 
 exports.default = ImageParam;
 
-},{"../actions":1,"react":408,"react-redux":246,"superagent":416}],7:[function(require,module,exports){
+},{"../actions":1,"react":408,"react-redux":246,"superagent":417}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -655,7 +686,7 @@ var Layout = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Layo
 
 exports.default = Layout;
 
-},{"../actions":1,"./frame":4,"lodash":240,"react":408,"react-redux":246,"superagent":416}],8:[function(require,module,exports){
+},{"../actions":1,"./frame":4,"lodash":240,"react":408,"react-redux":246,"superagent":417}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1289,7 +1320,7 @@ var Preview = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Pre
 
 exports.default = Preview;
 
-},{"react":408,"react-redux":246,"superagent":416}],12:[function(require,module,exports){
+},{"react":408,"react-redux":246,"superagent":417}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1417,17 +1448,17 @@ var _editor = require('./components/editor');
 
 var _editor2 = _interopRequireDefault(_editor);
 
-var _superagent = require('superagent');
-
-var _superagent2 = _interopRequireDefault(_superagent);
-
 var _reactAddonsUpdate = require('react-addons-update');
 
 var _reactAddonsUpdate2 = _interopRequireDefault(_reactAddonsUpdate);
 
+var _reduxThunk = require('redux-thunk');
+
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var initialState = template;
+var initialState = template; // set by server
 
 var CHANGE_BACKGROUND = 'CHANGE_BACKGROUND';
 var ADD_PARAM = 'ADD_PARAM';
@@ -1504,7 +1535,7 @@ var editorReducer = function editorReducer() {
   }
 };
 
-var store = (0, _redux.createStore)(editorReducer);
+var store = (0, _redux.createStore)(editorReducer, (0, _redux.applyMiddleware)(_reduxThunk2.default));
 
 (0, _reactDom.render)(_react2.default.createElement(
   _reactRedux.Provider,
@@ -1512,7 +1543,7 @@ var store = (0, _redux.createStore)(editorReducer);
   _react2.default.createElement(_editor2.default, null)
 ), document.getElementById('main'));
 
-},{"./components/editor":2,"lodash":240,"node-uuid":241,"react":408,"react-addons-update":242,"react-dom":243,"react-redux":246,"redux":414,"superagent":416}],14:[function(require,module,exports){
+},{"./components/editor":2,"lodash":240,"node-uuid":241,"react":408,"react-addons-update":242,"react-dom":243,"react-redux":246,"redux":415,"redux-thunk":409}],14:[function(require,module,exports){
 (function (process,global){
 /*!
  * @overview es6-promise - a tiny implementation of Promises/A+.
@@ -39960,7 +39991,7 @@ function wrapActionCreators(actionCreators) {
     return (0, _redux.bindActionCreators)(actionCreators, dispatch);
   };
 }
-},{"redux":414}],250:[function(require,module,exports){
+},{"redux":415}],250:[function(require,module,exports){
 /**
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
@@ -59108,6 +59139,25 @@ module.exports = require('./lib/React');
 },{"./lib/React":275}],409:[function(require,module,exports){
 'use strict';
 
+exports.__esModule = true;
+exports['default'] = thunkMiddleware;
+function thunkMiddleware(_ref) {
+  var dispatch = _ref.dispatch;
+  var getState = _ref.getState;
+
+  return function (next) {
+    return function (action) {
+      if (typeof action === 'function') {
+        return action(dispatch, getState);
+      }
+
+      return next(action);
+    };
+  };
+}
+},{}],410:[function(require,module,exports){
+'use strict';
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 exports.__esModule = true;
@@ -59163,7 +59213,7 @@ function applyMiddleware() {
     };
   };
 }
-},{"./compose":412}],410:[function(require,module,exports){
+},{"./compose":413}],411:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -59215,7 +59265,7 @@ function bindActionCreators(actionCreators, dispatch) {
   }
   return boundActionCreators;
 }
-},{}],411:[function(require,module,exports){
+},{}],412:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -59345,7 +59395,7 @@ function combineReducers(reducers) {
   };
 }
 }).call(this,require('_process'))
-},{"./createStore":413,"./utils/warning":415,"_process":215,"lodash/isPlainObject":239}],412:[function(require,module,exports){
+},{"./createStore":414,"./utils/warning":416,"_process":215,"lodash/isPlainObject":239}],413:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -59375,7 +59425,7 @@ function compose() {
     }, last.apply(undefined, arguments));
   };
 }
-},{}],413:[function(require,module,exports){
+},{}],414:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -59592,7 +59642,7 @@ function createStore(reducer, initialState, enhancer) {
     replaceReducer: replaceReducer
   };
 }
-},{"lodash/isPlainObject":239}],414:[function(require,module,exports){
+},{"lodash/isPlainObject":239}],415:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -59641,7 +59691,7 @@ exports.bindActionCreators = _bindActionCreators2["default"];
 exports.applyMiddleware = _applyMiddleware2["default"];
 exports.compose = _compose2["default"];
 }).call(this,require('_process'))
-},{"./applyMiddleware":409,"./bindActionCreators":410,"./combineReducers":411,"./compose":412,"./createStore":413,"./utils/warning":415,"_process":215}],415:[function(require,module,exports){
+},{"./applyMiddleware":410,"./bindActionCreators":411,"./combineReducers":412,"./compose":413,"./createStore":414,"./utils/warning":416,"_process":215}],416:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -59666,7 +59716,7 @@ function warning(message) {
   } catch (e) {}
   /* eslint-enable no-empty */
 }
-},{}],416:[function(require,module,exports){
+},{}],417:[function(require,module,exports){
 /**
  * Module dependencies.
  */
@@ -60745,7 +60795,7 @@ request.put = function(url, data, fn){
   return req;
 };
 
-},{"./is-object":417,"./request":419,"./request-base":418,"emitter":420,"reduce":421}],417:[function(require,module,exports){
+},{"./is-object":418,"./request":420,"./request-base":419,"emitter":421,"reduce":422}],418:[function(require,module,exports){
 /**
  * Check if `obj` is an object.
  *
@@ -60760,7 +60810,7 @@ function isObject(obj) {
 
 module.exports = isObject;
 
-},{}],418:[function(require,module,exports){
+},{}],419:[function(require,module,exports){
 /**
  * Module of mixed-in functions shared between node and client code
  */
@@ -60928,7 +60978,7 @@ exports.field = function(name, val) {
   return this;
 };
 
-},{"./is-object":417}],419:[function(require,module,exports){
+},{"./is-object":418}],420:[function(require,module,exports){
 // The node and browser modules expose versions of this with the
 // appropriate constructor function bound as first argument
 /**
@@ -60962,7 +61012,7 @@ function request(RequestConstructor, method, url) {
 
 module.exports = request;
 
-},{}],420:[function(require,module,exports){
+},{}],421:[function(require,module,exports){
 
 /**
  * Expose `Emitter`.
@@ -61125,7 +61175,7 @@ Emitter.prototype.hasListeners = function(event){
   return !! this.listeners(event).length;
 };
 
-},{}],421:[function(require,module,exports){
+},{}],422:[function(require,module,exports){
 
 /**
  * Reduce `arr` with `fn`.
