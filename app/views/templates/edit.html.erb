@@ -1,5 +1,5 @@
 <script type="text/javascript" >
-  var template = <%= @template.to_json.html_safe %>;
+  var template = { layout: <%= @template.data.to_json.html_safe %> };
   var templateUrl = "<%= url_for(@template) %>";
   var submitMethod = 'PUT';
 </script>

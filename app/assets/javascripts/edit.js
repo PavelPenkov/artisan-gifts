@@ -1531,7 +1531,7 @@ var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var initialState = { layout: template.data };
+var initialState = template;
 initialState.url = templateUrl;
 initialState.method = submitMethod;
 
@@ -1564,6 +1564,8 @@ var updatedFrame = function updatedFrame(state, id, props) {
   var newLayout = Object.assign({}, state.layout, { frames: newFrames });
   return Object.assign({}, state, { layout: newLayout });
 };
+
+console.log(initialState);
 
 var editorReducer = function editorReducer() {
   var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];

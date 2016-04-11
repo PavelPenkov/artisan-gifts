@@ -8,7 +8,7 @@ import Editor from './components/editor'
 import update from 'react-addons-update'
 import thunk from 'redux-thunk'
 
-const initialState = {layout: template.data}
+const initialState = template
 initialState.url = templateUrl
 initialState.method = submitMethod
 
@@ -41,6 +41,8 @@ const updatedFrame = (state, id, props) => {
   let newLayout = Object.assign({}, state.layout, { frames: newFrames });
   return Object.assign({}, state, { layout: newLayout });
 }
+
+console.log(initialState)
 
 const editorReducer = function(state = initialState, action) {
   switch(action.type) {
