@@ -57,10 +57,9 @@ class TemplatesController < ApplicationController
   def preview
     params.delete(:id)
     ctx = @template.context_from_params(params)
-    ap ctx
     json = {
       layout: @template.data,
-      context: @template.context_from_params(params)
+      context: ctx
     }
     preview = Generator::Preview.from_json(json)
     path = preview.generate
