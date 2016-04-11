@@ -82,7 +82,7 @@ class TemplatesController < ApplicationController
   end
 
   def default_template
-    default_background = Image.first
+    default_background = (Image.where(id: 74).first || Image.first)
     Template.new.tap do |t|
       t.data[:layout] = {
         background: {
