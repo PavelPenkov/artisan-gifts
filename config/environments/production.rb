@@ -83,7 +83,6 @@ Rails.application.configure do
       bucket: 'synapse-pictures',
       access_key_id: ENV['AWS_ACCESS_KEY_ID'],
       secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
-    },
-    s3_host_name: 'synapse-pictures.s3.amazonaws.com'
+    }
   }
 end
