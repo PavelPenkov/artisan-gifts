@@ -8,7 +8,7 @@ import Editor from './components/editor'
 import update from 'react-addons-update'
 import thunk from 'redux-thunk'
 
-const initialState = template // set by server
+const initialState = {layout: template.data}
 initialState.url = templateUrl
 initialState.method = submitMethod
 
