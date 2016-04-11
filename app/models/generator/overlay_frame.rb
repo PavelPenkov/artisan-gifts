@@ -2,7 +2,6 @@ module Generator
   class OverlayFrame < Frame
     def apply(src, value)
       bg = src
-      binding.pry
       layer = MiniMagick::Image.new(local_file(value))
       result = bg.composite(layer) do |c|
         c.compose 'Over'
