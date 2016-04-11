@@ -47,5 +47,11 @@ module Generator
     def bottom_right
       ::Generator::Point.new(left + width, top + height)
     end
+
+    def local_file(id)
+      name = dst_file_name
+      Image.find(id).image.copy_to_local_file(:original, name)
+      name
+    end
   end
 end

@@ -4,7 +4,7 @@ module Generator
 
     def self.from_json(doc)
       Layout.new.tap do |l|
-        l.background = Image.find(doc[:background][:id]).image.path(:medium)
+        l.background = doc[:background][:id]
         l.frames = doc[:frames].map{|frame| Frame.from_json(frame)}
       end
     end

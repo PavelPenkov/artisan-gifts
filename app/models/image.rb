@@ -1,7 +1,8 @@
 class Image < ActiveRecord::Base
   has_attached_file :image, {
     styles: { medium: '1000x1000>' },
-    url: '/system/:class/:attachment/:id_partition/:style/:hash.:extension',
+    url: ':s3_domain_url',
+    path: '/:class/:attachment/:id_partition/:style/:filename',
     hash_secret: 'paperclip_secret'
   }
 

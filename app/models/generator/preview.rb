@@ -10,7 +10,7 @@ module Generator
     end
 
     def initialize(layout, context)
-      tmp = MiniMagick::Image.open(layout.background)
+      tmp = MiniMagick::Image.open(local_file(layout.background))
       tmp.format('png')
       name = tmp_name
       tmp.write(name)
@@ -36,6 +36,12 @@ module Generator
         tmp_path = path
       end
       tmp_path + '.png'
+    end
+
+    def local_file(id)
+      name = tmp_name
+      Image.find(id).image.copy_to_local_file(:original, name)
+      name
     end
   end
 end

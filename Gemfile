@@ -12,6 +12,7 @@ gem 'jbuilder', '~> 2.4'
 gem 'oj'
 gem 'mini_magick'
 gem 'pg'
+gem 'aws-sdk', '< 2.0'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0'
