@@ -70,6 +70,11 @@ class TemplatesController < ApplicationController
     end
   end
 
+  def delete_all
+    Template.delete_all
+    redirect_to '/templates'
+  end
+
   private
 
   def set_template

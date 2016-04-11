@@ -8,6 +8,10 @@ Rails.application.routes.draw do
     member do
       post :preview
     end
+
+    collection do
+      get :delete_all
+    end
   end
 
   root 'templates#index'
