@@ -50,7 +50,7 @@ module Generator
 
     def local_file(id)
       name = dst_file_name
-      Image.find(id).image.copy_to_local_file(:original, name)
+      Image.find(id).image.copy_to_local_file(:medium, name)
       name
     end
   end

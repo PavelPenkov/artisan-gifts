@@ -40,7 +40,7 @@ module Generator
 
     def local_file(id)
       name = tmp_name
-      Image.find(id).image.copy_to_local_file(:original, name)
+      Image.find(id).image.copy_to_local_file(:medium, name)
       name
     end
   end
