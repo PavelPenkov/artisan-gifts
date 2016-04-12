@@ -20,3 +20,4 @@
 
 # Ignore files generated with Grunt
 app/assets/javascripts/index.js
+.env

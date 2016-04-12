@@ -297,7 +297,7 @@ var _ParamList = function (_React$Component) {
             'button',
             { onClick: function onClick() {
                 return _this2.handlePreviewClick();
-              } },
+              }, disabled: !this.props.previewEnabled },
             'Предварительный просмотр'
           )
         ),
@@ -337,7 +337,10 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     params: state.params,
     url: state.previewUrl || '/empty.png',
-    values: state.values
+    values: state.values,
+    previewEnabled: _lodash2.default.every(state.values, function (v, k) {
+      return v;
+    })
   };
 };
 

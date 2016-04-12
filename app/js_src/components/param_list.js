@@ -16,7 +16,7 @@ class _ParamList extends React.Component {
           { params }
         </div>
         <div>
-          <button onClick={ () => this.handlePreviewClick() }>Предварительный просмотр</button>
+          <button onClick={ () => this.handlePreviewClick() } disabled={ !this.props.previewEnabled } >Предварительный просмотр</button>
         </div>
         <div>
           <img src= { this.props.url } />
@@ -45,7 +45,8 @@ const mapStateToProps = (state) => {
   return {
     params: state.params,
     url: state.previewUrl || '/empty.png',
-    values: state.values
+    values: state.values,
+    previewEnabled: _.every(state.values, (v, k) => v)
   }
 }
 
