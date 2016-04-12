@@ -10,7 +10,7 @@ class Template < ActiveRecord::Base
     meta = {}
     meta[:params] = []
     meta[:values] = {}
-    data[:frames].each_with_index do |frame, i|
+    (data[:frames] || []).each_with_index do |frame, i|
       meta[:params] << { id: i, name: frame[:param], type: frame_to_param_type(frame[:type])}
       meta[:values][frame[:param]] = ''
     end
